@@ -68,7 +68,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://dshinez.com',
     'https://dshinezdigital.com', 
     'https://laserscreed.in',
-    'https://api.dshinez.com',
     'https://phos.in'
 ]
 
@@ -98,6 +97,7 @@ AUTH_USER_MODEL = 'attendenceapp.User'
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -166,6 +166,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # ✅ ADDED for production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
