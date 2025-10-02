@@ -1,8 +1,25 @@
 from django.urls import path
+from django.conf import settings
+from django.http import FileResponse, Http404 
+import os  
 from .views import (LoginView, RegisterEmployeeView, MeView, ProfilePhotoUploadView, employee_list, offline_employees, 
     manage_employee, online_employees,LaserScreedSubmissionListCreateView,LaserScreedSubmissionDetailView, submit_form, submissions_list, delete_submission, 
     submit_contact, contact_submissions_list, delete_contact_submission)
 from . import views_tracking
+
+
+
+def download_pdf(request):
+    pdf_path = os.path.join(settings.MEDIA_ROOT, 'bookquotes', 'dshinez.pdf')
+    if os.path.exists(pdf_path):
+        return FileResponse(
+            open(pdf_path, 'rb'), 
+            as_attachment=True, 
+            filename='dshinez-quote.pdf',
+            content_type='application/pdf'
+        )
+    else:
+        raise Http404("PDF not found")
 
 urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
@@ -45,4 +62,7 @@ urlpatterns = [
     path("contact/submissions/", contact_submissions_list, name="contact_submissions"),
     path("quote/submissions/<int:pk>/", delete_submission, name="delete_submission"), 
     path("contact/submissions/<int:pk>/", delete_contact_submission, name="delete_contact_submission"),
+    
+    
+    path("download-pdf/", download_pdf, name="download_pdf"),
 ]

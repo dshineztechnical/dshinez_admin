@@ -203,8 +203,10 @@ def submit_form(request):
     if serializer.is_valid():
         serializer.save()
         
-        # ✅ Return PDF URL in response
-        pdf_url = "/media/bookquotes/dshinez.pdf"  # Path from your media folder
+        # ✅ Use direct download endpoint instead of media URL
+        scheme = 'https' if request.is_secure() else 'http'
+        host = request.get_host()
+        pdf_url = f"{scheme}://{host}/api/download-pdf/"
         
         return Response({
             'message': 'Quote request submitted successfully!',
@@ -212,6 +214,8 @@ def submit_form(request):
             'pdf_url': pdf_url 
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 # ✅ Quote submissions list (restricted to admins)
