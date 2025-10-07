@@ -57,7 +57,7 @@ SIMPLE_JWT = {
 
 # CORS Configuration
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = False  # ✅ Set to False for production security
+CORS_ALLOW_ALL_ORIGINS = False  # Set to False for production security
 
 # CORS Origins with safe fallback
 cors_origins_env = os.getenv('CORS_ORIGINS', 'http://localhost:5173')
@@ -88,13 +88,13 @@ CORS_ALLOW_HEADERS = [
 # Enhanced Security Settings - Environment-based Configuration
 USE_HTTPS = os.getenv('USE_HTTPS', 'True').lower() == 'true'
 
-# ✅ Automatically disable HTTPS for development server
+# Automatically disable HTTPS for development server
 if DEBUG or 'runserver' in sys.argv:
     USE_HTTPS = False
-    print("🔧 Development mode detected - HTTPS disabled")
+    print("Development mode detected - HTTPS disabled")
 
 if USE_HTTPS:
-    print("🔒 HTTPS Security enabled")
+    print("HTTPS Security enabled")
     # HTTPS Security Settings
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = int(os.getenv('SECURE_HSTS_SECONDS', '31536000'))  # 1 year
@@ -118,7 +118,7 @@ if USE_HTTPS:
     # ✅ CSRF Trusted Origins for HTTPS - Use environment variable
     CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in cors_origins_env.split(',') if origin.strip()]
 else:
-    print("🔓 HTTP mode - Development settings")
+    print("HTTP mode - Development settings")
     # HTTP settings (for development/testing)
     SECURE_SSL_REDIRECT = False
     SECURE_HSTS_SECONDS = 0
@@ -134,7 +134,7 @@ else:
     SESSION_COOKIE_SAMESITE = 'Lax'
     CSRF_COOKIE_SAMESITE = 'Lax'
     
-    # ✅ CSRF Trusted Origins for HTTP - Use environment variable
+    # CSRF Trusted Origins for HTTP - Use environment variable
     CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in cors_origins_env.split(',') if origin.strip()]
 
 # Custom User Model
@@ -142,7 +142,7 @@ AUTH_USER_MODEL = 'attendenceapp.User'
 
 # Middleware
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Must be first
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -218,7 +218,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ✅ Enhanced Logging for Production
+# Enhanced Logging for Production
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
